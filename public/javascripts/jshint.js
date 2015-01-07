@@ -76,11 +76,13 @@ function pref(id, val) {
 }
 
 function setup() {
+  /* hoge
   each(prefs, function (opts, n) {
     each(opts, function (state, id) {
       el("#" + id).className = state ? "active" : ""
     })
   })
+  */
 
   on("body", "click", function (ev) {
     if (ev.target.getAttribute("data-type") !== "toggle")
@@ -117,23 +119,27 @@ function setup() {
 
 function main() {
   var value = el("#text-intro").innerHTML
-  value = value.split("\n")
-  value = value.slice(1, value.length - 1)
-  value = value.map(function (line) { return line.slice(6) }).join("\n")
-
-  editor = CodeMirror(document.body, {
-    value:          value,
-    mode:           "javascript",
-    tabSize:        2,
-    indentUnit:     2,
-    lineNumbers:    true,
-    indentWithTabs: false
-  })
+  editor = ace.edit('editor');
+  editor.setTheme('ace/theme/xcode');
+  editor.getSession().setMode('ace/mode/javascript');
+  editor.setValue(value);
 
   setup()
   lint()
 
   var tm = null
+  var session = editor.getSession();
+  session.on('change', function(cm) {
+    if (tm)
+      clearTimeout(tm)
+
+    tm = setTimeout(function () {
+      tm = null
+      lint()
+    }, 200)
+  });
+    
+  /* hoge
   editor.on("change", function (cm) {
     if (tm)
       clearTimeout(tm)
@@ -143,14 +149,17 @@ function main() {
       lint()
     }, 200)
   })
+  */
+    
 }
 
 function lint() {
-  var value  = editor.getValue()
+  var value  = editor.getSession().getValue()
   var config = {}
+  console.log(value);
 
   if (!worker) {
-    worker = new Worker("/res/worker.js")
+    worker = new Worker("/javascripts/worker.js")
     worker.addEventListener("message", function (ev) { display(JSON.parse(ev.data.result)) })
   }
 
