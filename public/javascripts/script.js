@@ -1,28 +1,25 @@
 
 $(function() {
+
+  var socket = io.connect('/');
   var editor = ace.edit('editor');
   
   editor.setTheme('ace/theme/xcode');
   editor.getSession().setMode('ace/mode/javascript'); 
-  editor.setValue('var sum = 1;');
+  editor.setValue('var sum = 0;\n\nfor(var i=0; i< 10; i++) {\n    sum += i;\n}\nconsole.log(\'Sum is \' + sum)\nsum;');
 
   var session = editor.getSession();
   session.on('change', function() {
-    var value = session.getValue();   
-    var ajax = $.ajax({
-      url: '/sandbox',
-      type: 'post',
-      data: { code: 'code' }
-    });
+    var value = session.getValue();
+    socket.emit('msg', { code : value });
+  });
 
-    ajax.done( function(res) {
-      $('#console').text(res);
-      console.log(res);
-    });
+  socket.on('res', function (data) {
+    console.log('result: ' + data.result + ', console: ' + data.console);
   });
   
+  
 });
-
 
 var app = angular.module('myapp', ['ui.ace']);
 
