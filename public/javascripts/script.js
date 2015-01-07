@@ -1,18 +1,22 @@
 
 $(function() {
-  alert(hoge);
-  
   var editor = ace.edit('editor');
   
-  editor.setTheme('ace/theme/monokai');
+  editor.setTheme('ace/theme/xcode');
   editor.getSession().setMode('ace/mode/javascript'); 
-  editor.setValue('hgeogweo');
-  
+  editor.setValue('var sum = 1;');
+
   var session = editor.getSession();
-  
+
+  var Sandbox = require('./sandbox.js'),
+      s = new Sandbox();
+
   session.on('change', function() {
-    var value = session.getValue();
-    console.log(value);
+    var value = session.getValue();   
+    $('#console').html(value);
+    s.run('1+1', function(output) {
+      console.logt(output.result);
+    });
   });
   
 });
