@@ -29,6 +29,11 @@ a {
   font-family: 'Monaco';
 }
 
+.report td {
+  vertical-align: top;
+  padding: 5px;
+}
+
 #iframe {
   width: 100%;
   height: 400px;

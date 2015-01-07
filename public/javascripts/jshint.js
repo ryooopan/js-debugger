@@ -212,7 +212,16 @@ function showErrors(errors) {
 
   if (!errors)
     return false
+  else
+    text = errors.length
 
+  //table.appendChild(makeRow(null, text))
+  errors.forEach(function (err) {
+    if (err === null) return
+    table.appendChild(makeRow(err.line, err.reason))
+  })
+  
+  /* hoge
   if (errors.length === 1)
     text = "One warning"
   else if (errors.length < 11)
@@ -226,6 +235,7 @@ function showErrors(errors) {
     if (err === null) return
     table.appendChild(makeRow(err.line, err.reason))
   })
+  */
 }
 
 function showUndef(undef) {
@@ -234,7 +244,17 @@ function showUndef(undef) {
 
   if (!prefs.meta.undef || !undef)
     return false
+  else
+    text = undef.length
 
+  //table.appendChild(makeRow(null, text))
+  undef.forEach(function (item) {
+    item.line.forEach(function (line) {
+      table.appendChild(makeRow(line, item.name))
+    })
+  })
+  
+  /* hoge
   if (undef.length === 1)
     text = "One undefined variable"
   else if (undef.length < 11)
@@ -249,7 +269,7 @@ function showUndef(undef) {
       table.appendChild(makeRow(line, item.name))
     })
   })
-
+  */
   return undef.length > 0
 }
 
@@ -259,7 +279,15 @@ function showUnused(unused) {
 
   if (!prefs.meta.unused || !unused)
     return false
+  else
+    text = unused.length
 
+  // table.appendChild(makeRow(null, text))
+  unused.forEach(function (item) {
+    table.appendChild(makeRow(item.line, item.name))
+  })
+
+  /* hoge
   if (unused.length === 1)
     text = "One unused variable"
   else if (unused.length < 11)
@@ -272,7 +300,7 @@ function showUnused(unused) {
   unused.forEach(function (item) {
     table.appendChild(makeRow(item.line, item.name))
   })
-
+  */
   return unused.length > 0
 }
 
