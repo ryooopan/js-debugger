@@ -4,5 +4,8 @@
  */
 
 exports.list = function(req, res){
-  res.send("respond with a resource");
+  var users = ['Ryo', 'Shohei', 'Shu'];
+  res.render('users', {
+    users: users
+  });
 };
