@@ -7,15 +7,17 @@ $(function() {
   editor.setValue('var sum = 1;');
 
   var session = editor.getSession();
-
-  var Sandbox = require('./sandbox.js'),
-      s = new Sandbox();
-
   session.on('change', function() {
     var value = session.getValue();   
-    $('#console').html(value);
-    s.run('1+1', function(output) {
-      console.logt(output.result);
+    var ajax = $.ajax({
+      url: '/sandbox',
+      type: 'post',
+      data: { code: 'code' }
+    });
+
+    ajax.done( function(res) {
+      $('#console').text(res);
+      console.log(res);
     });
   });
   
