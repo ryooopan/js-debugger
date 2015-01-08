@@ -158,6 +158,13 @@ function lint() {
   var config = {}
   console.log(value);
 
+  var socket = io.connect('/');
+  socket.emit('msg', { code : value });  
+
+  socket.on('res', function (data) {
+    $('#output').html('<p>result: ' + data.result + '</p><p>console: ' + data.console + '</p>');
+  });
+  
   if (!worker) {
     worker = new Worker("/javascripts/worker.js")
     worker.addEventListener("message", function (ev) { display(JSON.parse(ev.data.result)) })

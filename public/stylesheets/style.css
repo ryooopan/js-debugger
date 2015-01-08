@@ -27,6 +27,7 @@ a {
   background: black;
   color: white;
   font-family: 'Monaco';
+  overflow-y: hidden;
 }
 
 .report td {

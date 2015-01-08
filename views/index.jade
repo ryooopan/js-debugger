@@ -3,21 +3,20 @@ extends layout
 block content
   div#editor 
   div#console
+    p Output
     div#output
-      .report(data-type='metrics', style='display:none')
-        h4 Metrics
-        div
-
-      h4 Error: 
-      table.report(data-type='errors')
-
-      h4 Undefined:
-      table.report(data-type='undef')
-
-      h4 Unused variables:
-      table.report(data-type='unused') 
-                                              
-
+  
+    p -----------
+        
+    p error: 
+    table.report(data-type='errors')
+  
+    p undefined:
+    table.report(data-type='undef')
+    
+    p unused variables:
+    table.report(data-type='unused') 
+            
   script#text-intro(type='text/jshint').
     var sum = 0;
     for(var i=0; i< 10; i++) {
