@@ -6,16 +6,11 @@ $(function() {
   
   editor.setTheme('ace/theme/xcode');
   editor.getSession().setMode('ace/mode/javascript'); 
-  editor.setValue('var sum = 0;\n\nfor(var i=0; i< 10; i++) {\n    sum += i;\n}\nconsole.log(\'Sum is \' + sum)\nsum;');
-
-  var session = editor.getSession();
-  session.on('change', function() {
-    var value = session.getValue();
-    socket.emit('msg', { code : value });
-  });
 
   socket.on('res', function (data) {
-    console.log('result: ' + data.result + ', console: ' + data.console);
+    console.log('hoge');
+    editor.setValue(data, -1);
+    // console.log('result: ' + data.result + ', console: ' + data.console);
   });
   
   

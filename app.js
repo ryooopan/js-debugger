@@ -44,6 +44,13 @@ io.sockets.on('connection', function (socket) {
   var address = socket.handshake.address;
   console.log('connected from ' + address.address + ':' + address.port);
 
+  socket.on('msg', function(data) {
+    var code = data.code;
+    console.log('update');
+    io.sockets.emit('res', code);
+  });
+  
+  /*
   socket.on('msg', function(data){
     console.log(data);
     var code = data.code,
@@ -56,9 +63,11 @@ io.sockets.on('connection', function (socket) {
       console.log(output);
     });   
   });
-
+  */
+  
   socket.on('disconnect', function () {
     console.log("disconnectted from " + address.address + ":" + address.port)
   });
 
 });
+
