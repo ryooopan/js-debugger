@@ -45,9 +45,8 @@ io.sockets.on('connection', function (socket) {
   console.log('connected from ' + address.address + ':' + address.port);
 
   socket.on('msg', function(data) {
-    var code = data.code;
-    console.log('update');
-    io.sockets.emit('res', code);
+    console.log(data);
+    io.sockets.emit('msg', data);
   });
   
   /*
